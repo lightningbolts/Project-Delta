@@ -24,8 +24,8 @@ def trading_strategy(stock_data):
 
     # Generate signals
     stock_data['Signal'] = 0
-    stock_data['Signal'][50:] = [
-        1 if stock_data['SMA_50'][i] > stock_data['SMA_200'][i] else -1
+    stock_data.loc[stock_data.index[50:], 'Signal'] = [
+        1 if stock_data.iloc[i]['SMA_50'] > stock_data.iloc[i]['SMA_200'] else -1
         for i in range(50, len(stock_data))
     ]
 
@@ -52,6 +52,11 @@ def generate_recommendation(ticker):
         return "Hold"
 
 if __name__ == "__main__":
-    ticker = input("Enter the stock ticker symbol: ").upper()
-    recommendation = generate_recommendation(ticker)
-    print(f"Recommendation for {ticker}: {recommendation}")
+    tickers = ["AAPL", "TSLA", "AMZN", "GOOGL", "MSFT", "NVDA", "PYPL", "ADBE", "NFLX", "INTC", "CSCO", "CMCSA", "PEP", "COST", "TMUS", "AVGO", "TXN", "QCOM", "SBUX"]
+    for ticker in tickers:
+        recommendation = generate_recommendation(ticker)
+        print(f"Recommendation for {ticker}: {recommendation}")
+
+    # ticker = input("Enter the stock ticker symbol: ").upper()
+    # recommendation = generate_recommendation(ticker)
+    # print(f"Recommendation for {ticker}: {recommendation}")
